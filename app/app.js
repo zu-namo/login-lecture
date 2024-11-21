@@ -10,6 +10,8 @@ const home = require("./src/routes/home");
 //보이는앱 세팅
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
+
+// ejs파일에서 찾는 경로가 public 아래로 찾음
 app.use(express.static(`${__dirname}/src/public`));
 
 app.use("/", home); // 미들웨어를 등록해주는 에서드. 
