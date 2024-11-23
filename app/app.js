@@ -1,6 +1,7 @@
 "use strict";
 //모듈
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 // const PORT = 3000;
@@ -10,10 +11,12 @@ const home = require("./src/routes/home");
 //보이는앱 세팅
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
-
 // ejs파일에서 찾는 경로가 public 아래로 찾음
 app.use(express.static(`${__dirname}/src/public`));
-
+app.use(express.json());
+// url을 통해 전달되는 테이터에 한글,공백문자등 이 포함될 때 인식안되는 문제해결
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use("/", home); // 미들웨어를 등록해주는 에서드. 
 
 module.exports = app;
