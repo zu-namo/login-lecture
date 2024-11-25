@@ -1,7 +1,8 @@
 "use strict";
 //모듈
 const express = require("express");
-const bodyParser = require("body-parser");
+//바디파서 필요 없어짐
+// const bodyParser = require("body-parser");
 const app = express();
 
 // const PORT = 3000;
