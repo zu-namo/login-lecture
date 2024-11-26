@@ -1,10 +1,8 @@
 "use strict";
+const { name } = require("ejs");
 //function hello(req,res){}
-const users = {
-    id: ['zunamo', '김모성', '김모성님'],
-    password: ['1234', '12345', '12345']
-}
 
+const UserStorage = require("../../models/UserStorage");
 const output = {
     home: (req, res) => {
         res.render('home/index');
@@ -18,20 +16,20 @@ const process = {
         // console.log(req.body);
         const id = req.body.id;
         const password = req.body.password;
-
+        // const userStorage = new UserStorage();
+        const users = UserStorage.getUsers("id", "password");
+        const response = {};
         if (users.id.includes(id)) {
             const idx = users.id.indexOf(id);
             if (users.password[idx] === password) {
                 // console.log('success');
-                return res.json({
-                    success: true,
-                });
+                response.success = true;
+                return res.json(response);
             }
         }
-        return res.json({
-            success: false,
-            mag: '로그인실패'
-        });
+        response.success = false;
+        response.msq = "로그인실패";
+        return res.json(response);
     }
 }
 
