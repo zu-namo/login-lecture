@@ -1,8 +1,8 @@
 "use strict";
-const { name } = require("ejs");
+// const { name } = require("ejs");
 //function hello(req,res){}
 
-const UserStorage = require("../../models/UserStorage");
+const User = require("../../models/User");
 const output = {
     home: (req, res) => {
         res.render('home/index');
@@ -13,22 +13,9 @@ const output = {
 }
 const process = {
     login: (req, res) => {
-        // console.log(req.body);
-        const id = req.body.id;
-        const password = req.body.password;
-        // const userStorage = new UserStorage();
-        const users = UserStorage.getUsers("id", "password");
-        const response = {};
-        if (users.id.includes(id)) {
-            const idx = users.id.indexOf(id);
-            if (users.password[idx] === password) {
-                // console.log('success');
-                response.success = true;
-                return res.json(response);
-            }
-        }
-        response.success = false;
-        response.msq = "로그인실패";
+        const user = new User(req.body);
+        const response = user.login();
+        //console.log(response);
         return res.json(response);
     }
 }
@@ -37,4 +24,8 @@ const process = {
 module.exports = {
     output,
     process
-}    
+}
+
+// const user = new User(req.body);
+// const response = user.login();
+// return res.json(response);
